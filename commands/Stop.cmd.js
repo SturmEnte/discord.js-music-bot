@@ -1,11 +1,11 @@
 
 module.exports.run = (client, message, args) => {
 
-
+    client.leaveChannel(message)
 
 }
 
 module.exports.help = {
-    name: "...",
+    name: "stop",
     description: "..."
 }
