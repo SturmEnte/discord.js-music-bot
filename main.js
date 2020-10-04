@@ -1,7 +1,7 @@
-const { Client, Collection } = require('discord.js')
+const { Client, Collection, MessageEmbed } = require('discord.js')
 const fs = require('fs')
 const ytdl = require('ytdl-core')
-const youtube_info = require('youtube-info')
+const ytinfo = require('updated-youtube-info')
 
 const client = new Client()
 const config = require('./json/config.json')
@@ -13,7 +13,8 @@ client.nowPlaying = new Map()
 client.config = config
 client.prefix = '?'
 client.ytdl = ytdl
-client.youtube_info = youtube_info
+client.ytinfo = ytinfo
+client.embed = MessageEmbed
 
 client.commands = new Collection()
 
@@ -73,4 +74,11 @@ client.leaveChannel = (message) => {
 
     voiceChannel.leave()
     message.channel.send(':white_check_mark: Disconnected from channel ``' + message.channel.name + '``')
+}
+
+client.getVideoInfo = async(url) => {
+    await ytinfo(url.split('?v=')[1].split('&')[0]).then(data => {
+        console.log(data)
+        return data
+    })
 }
