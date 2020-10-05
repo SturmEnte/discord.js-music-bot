@@ -19,15 +19,13 @@ module.exports.run = async (client, message, args) => {
                 if (!client.queue[message.channel.guild.id]) client.queue[message.channel.guild.id] = { index: 0, array: [] }
                 client.queue[message.channel.guild.id].array.push({ link: link, info: info })
 
-                client.nowPlaying[message.channel.guild.id] = info
-
-                console.log(info)
-
                 const embed = new client.embed()
                 embed.setThumbnail(info.thumbnailUrl)
                 embed.setTitle('Now Playing')
                 embed.setDescription(`[${info.title}](${info.url})`)
                 message.channel.send(embed)
+
+                client.nowPlaying[message.channel.guild.id] = embed
 
             })
 
