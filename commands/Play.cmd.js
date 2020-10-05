@@ -1,4 +1,4 @@
-module.exports.run = async(client, message, args) => {
+module.exports.run = async (client, message, args) => {
 
     if (!client.voice.connections.has(message.channel.guild.id))
         if (client.joinChannel(message) == 'fail') return
@@ -6,28 +6,38 @@ module.exports.run = async(client, message, args) => {
 
     if (args.length <= 0) return message.channel.send(`:x: You didn't specify a Youtube URL`)
     const link = args[0]
-    try {
-        voiceConnection.play(client.ytdl(link, { filter: 'audioonly', format: '.mp3' })).setVolume(client.volume[message.channel.guild.id] || client.config.defaultVolume)
+    if (!link.startsWith('https://www.youtube.com/watch?' || 'http://www.youtube.com/watch?')) return message.channel.send(`:x: You didn't specify a Youtube URL`)
 
-        client.ytinfo(link.split('?v=')[1].split('&')[0]).then(info => {
+    if (voiceConnection.dispatcher == null) {
+        try {
+            const dispatcher = voiceConnection.play(client.ytdl(link, { filter: 'audioonly', format: '.mp3' }))
+            dispatcher.setVolume(client.volume[message.channel.guild.id] || client.config.defaultVolume)
+            dispatcher.on('finish', () => client.playNext(message))
 
-            if (!client.queue[message.channel.guild.id]) client.queue[message.channel.guild.id] = []
-            client.queue[message.channel.guild.id].push({ link: link, info: info })
-            client.nowPlaying[message.channel.guild.id] = info
+            client.ytinfo(link.split('?v=')[1].split('&')[0]).then(info => {
 
-            console.log(info)
+                if (!client.queue[message.channel.guild.id]) client.queue[message.channel.guild.id] = { index: 0, array: [] }
+                client.queue[message.channel.guild.id].array.push({ link: link, info: info })
 
-            const embed = new client.embed()
-            embed.setThumbnail(info.thumbnailUrl)
-            embed.setTitle('Now Playing')
-            embed.setDescription(`[${info.title}](${info.url})`)
-            message.channel.send(embed)
-        })
+                client.nowPlaying[message.channel.guild.id] = info
 
-    } catch (error) {
-        message.channel.send(`:x: You didn't specify a Youtube URL`)
-        console.error(error)
-        return
+                console.log(info)
+
+                const embed = new client.embed()
+                embed.setThumbnail(info.thumbnailUrl)
+                embed.setTitle('Now Playing')
+                embed.setDescription(`[${info.title}](${info.url})`)
+                message.channel.send(embed)
+
+            })
+
+        } catch (error) {
+            message.channel.send(`:x: You didn't specify a Youtube URL`)
+            console.error(error)
+            return
+        }
+    } else {
+        message.channel.send('geht nicht du ``Nils.exe``')
     }
 
 }

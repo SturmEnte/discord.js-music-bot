@@ -65,6 +65,7 @@ client.joinChannel = (message) => {
     if (!permissions.has('SPEAK')) return message.channel.send(':x: I cant speak in <our current channel')
 
     voiceChannel.join()
+
     message.channel.send(':white_check_mark: Joined channel ``' + message.channel.name + '``')
 }
 
@@ -76,9 +77,13 @@ client.leaveChannel = (message) => {
     message.channel.send(':white_check_mark: Disconnected from channel ``' + message.channel.name + '``')
 }
 
-client.getVideoInfo = async(url) => {
+client.getVideoInfo = async (url) => {
     await ytinfo(url.split('?v=')[1].split('&')[0]).then(data => {
         console.log(data)
         return data
     })
+}
+
+client.playNext = (message) => {
+    message.channel.send('Play next')
 }
