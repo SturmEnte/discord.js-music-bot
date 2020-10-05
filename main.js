@@ -9,6 +9,7 @@ const config = require('./json/config.json')
 client.queue = new Map()
 client.volume = new Map()
 client.nowPlaying = new Map()
+client.loop = new Map()
 
 client.config = config
 client.prefix = '?'
@@ -86,4 +87,34 @@ client.getVideoInfo = async (url) => {
 
 client.playNext = (message) => {
     message.channel.send('Play next')
+
+    if (!client.voice.connections.has(message.channel.guild.id)) return
+
+    let tloop = loop[message.channel.guild.id]
+    const tqueue = queue[message.channel.guild.id]
+    const voiceConnection = client.voice.connections.get(message.channel.guild.id)
+
+    if (!tqueue) return
+    if (!tloop) tloop = null
+
+    if (loop == 'one') {
+        const info = tqueue.array[tqueue.index].info
+        const link = tqueue.array[tqueue.index].link
+        voiceConnection.play(ytdl(link, { filter: 'audioonly', format: 'mp3' }))
+        const embed = new client.embed()
+        embed.setThumbnail(info.thumbnailUrl)
+        embed.setTitle('Now Playing')
+        embed.setDescription(`[${info.title}](${info.url})`)
+        message.channel.send(embed)
+        return
+    } else if (loop == 'all') {
+
+    } else {
+
+    }
+
+    if (tqueue.length - 1 > tqueue.index) {
+
+    }
+
 }

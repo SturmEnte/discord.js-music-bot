@@ -1,11 +1,11 @@
 
 module.exports.run = (client, message, args) => {
 
-
+    if (!)
 
 }
 
 module.exports.help = {
-    name: "...",
+    name: "repeat",
     description: "..."
 }
