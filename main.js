@@ -78,7 +78,7 @@ client.leaveChannel = (message) => {
     message.channel.send(':white_check_mark: Disconnected from channel ``' + message.channel.name + '``')
 }
 
-client.getVideoInfo = async(url) => {
+client.getVideoInfo = async (url) => {
     await ytinfo(url.split('?v=')[1].split('&')[0]).then(data => {
         console.log(data)
         return data
@@ -86,77 +86,88 @@ client.getVideoInfo = async(url) => {
 }
 
 client.playNext = (message) => {
+
+    console.log(client.queue)
+    console.log(client.nowPlaying)
+    console.log(client.volume)
+
     message.channel.send('Play next')
 
-    if (!client.voice.connections.has(message.channel.guild.id)) return
-
-    let loop = repeat[message.channel.guild.id]
-    const tqueue = queue[message.channel.guild.id]
     const voiceConnection = client.voice.connections.get(message.channel.guild.id)
+    if (!voiceConnection) return
+    if (!client.queue[message.channel.guild.id]) return voiceConnection.channel.leave()
+    if (client.queue[message.channel.guild.id].array.length <= 1) return voiceConnection.channel.leave()
 
-    if (!tqueue) return
-    if (!loop) loop = ''
 
-    if (loop == 'one') {
-        const info = tqueue.array[tqueue.index].info
-        const link = tqueue.array[tqueue.index].link
-        voiceConnection.play(ytdl(link, { filter: 'audioonly', format: 'mp3' }))
-        const embed = new client.embed()
-        embed.setThumbnail(info.thumbnailUrl)
-        embed.setTitle('Now Playing')
-        embed.setDescription(`[${info.title}](${info.url})`)
-        message.channel.send(embed)
-
-        nowPlaying[message.channel.guild.id] = embed
-        return
-    } else if (loop == 'all') {
-
-        if (args.length <= tqueue.index + 2) {
-            queue[message.channel.guild.id].index = tqueue.index + 1
-            voiceConnection.play(ytdl(tqueue.array[tqueue.index + 1].link, { filter: 'audioonly', format: 'mp3' }))
-            const info = tqueue.array[tqueue.index + 1].info
+    /*
+        let loop = client.repeat[message.channel.guild.id]
+        const tqueue = client.queue[message.channel.guild.id]
+        const voiceConnection = client.voice.connections.get(message.channel.guild.id)
+    
+        if (!tqueue) return
+        if (!loop) loop = ''
+    
+        if (loop == 'one') {
+            const info = tqueue.array[tqueue.index].info
+            const link = tqueue.array[tqueue.index].link
+            voiceConnection.play(ytdl(link, { filter: 'audioonly', format: 'mp3' }))
             const embed = new client.embed()
             embed.setThumbnail(info.thumbnailUrl)
             embed.setTitle('Now Playing')
             embed.setDescription(`[${info.title}](${info.url})`)
             message.channel.send(embed)
-
+    
             nowPlaying[message.channel.guild.id] = embed
             return
+        } else if (loop == 'all') {
+    
+            if (args.length <= tqueue.index + 2) {
+                client.queue[message.channel.guild.id].index = tqueue.index + 1
+                voiceConnection.play(ytdl(tqueue.array[tqueue.index + 1].link, { filter: 'audioonly', format: 'mp3' }))
+                const info = tqueue.array[tqueue.index + 1].info
+                const embed = new client.embed()
+                embed.setThumbnail(info.thumbnailUrl)
+                embed.setTitle('Now Playing')
+                embed.setDescription(`[${info.title}](${info.url})`)
+                message.channel.send(embed)
+    
+                nowPlaying[message.channel.guild.id] = embed
+                return
+            } else {
+                client.queue[message.channel.guild.id].index = 0
+                voiceConnection.play(ytdl(tqueue.array[0].link, { filter: 'audioonly', format: 'mp3' })).on('finish', () => client.playNext(message))
+                const info = tqueue.array[0].info
+                const embed = new client.embed()
+                embed.setThumbnail(info.thumbnailUrl)
+                embed.setTitle('Now Playing')
+                embed.setDescription(`[${info.title}](${info.url})`)
+                message.channel.send(embed)
+    
+                nowPlaying[message.channel.guild.id] = embed
+                return
+            }
+    
         } else {
-            queue[message.channel.guild.id].index = 0
-            voiceConnection.play(ytdl(tqueue.array[0].link, { filter: 'audioonly', format: 'mp3' })).on('finish', () => client.playNext(message))
-            const info = tqueue.array[0].info
-            const embed = new client.embed()
-            embed.setThumbnail(info.thumbnailUrl)
-            embed.setTitle('Now Playing')
-            embed.setDescription(`[${info.title}](${info.url})`)
-            message.channel.send(embed)
-
-            nowPlaying[message.channel.guild.id] = embed
-            return
+    
+            client.queue[message.channel.guild.id].array = client.removeFromArray(client.queue[message.channel.guild.id].array, client.queue[message.channel.guild.id].index)
+            if (client.queue[message.channel.guild.id].index + 1 > client.queue[message.channel.guild.id].index) {
+                client.queue[message.channel.guild.id].index = client.queue[message.channel.guild.id].index + 1
+                const index = client.queue[message.channel.guild.id].index
+                const array = client.queue[message.channel.guild.id].array
+                const info = client.queue[message.channel.guild.id].array[index].info
+                voiceConnection.play(ytdl(array[index].link, { filter: 'audioonly', format: 'mp3' })).on('finish', () => client.playNext(message))
+    
+                const embed = new client.embed()
+                embed.setThumbnail(info.thumbnailUrl)
+                embed.setTitle('Now Playing')
+                embed.setDescription(`[${info.title}](${info.url})`)
+                message.channel.send(embed)
+    
+                nowPlaying[message.channel.guild.id] = embed
+                return
+            }
         }
-
-    } else {
-        queue[message.channel.guild.id].array = client.removeFromArray(queue[message.channel.guild.id].array, queue[message.channel.guild.id].index)
-        if (queue[message.channel.guild.id].index + 1 > queue[message.channel.guild.id].index) {
-            queue[message.channel.guild.id].index = queue[message.channel.guild.id].index + 1
-            const index = queue[message.channel.guild.id].index
-            const array = queue[message.channel.guild.id].array
-            const info = array.info
-            voiceConnection.play(ytdl(array[index].link, { filter: 'audioonly', format: 'mp3' })).on('finish', () => client.playNext(message))
-
-            const embed = new client.embed()
-            embed.setThumbnail(info.thumbnailUrl)
-            embed.setTitle('Now Playing')
-            embed.setDescription(`[${info.title}](${info.url})`)
-            message.channel.send(embed)
-
-            nowPlaying[message.channel.guild.id] = embed
-            return
-        }
-    }
-
+    */
 }
 
 client.removeFromArray = (array, index) => {

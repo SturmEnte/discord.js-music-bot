@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args) => {
     const link = args[0]
     if (!link.startsWith('https://www.youtube.com/watch?' || 'http://www.youtube.com/watch?')) return message.channel.send(`:x: You didn't specify a Youtube URL`)
 
-    if (voiceConnection.dispatcher == null) {
+    if (!voiceConnection.dispatcher) {
         try {
             const dispatcher = voiceConnection.play(client.ytdl(link, { filter: 'audioonly', format: '.mp3' }))
             dispatcher.setVolume(client.volume[message.channel.guild.id] || client.config.defaultVolume)
@@ -35,7 +35,12 @@ module.exports.run = async (client, message, args) => {
             return
         }
     } else {
-        message.channel.send('geht nicht du ``Nils.exe``')
+
+        client.ytinfo(link.split('?v=')[1].split('&')[0]).then(info => {
+            if (!client.queue[message.channel.guild.id]) client.queue[message.channel.guild.id] = { index: 0, array: [] }
+            client.queue[message.channel.guild.id].array.push({ link: link, info: info })
+        })
+
     }
 
 }
