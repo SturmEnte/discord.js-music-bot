@@ -1,7 +1,7 @@
-
 module.exports.run = (client, message, args) => {
 
     client.leaveChannel(message)
+    client.nowPlaying[message.channel.guild.id] = undefined
 
 }
 

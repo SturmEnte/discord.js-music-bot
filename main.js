@@ -81,7 +81,7 @@ client.leaveChannel = (message) => {
     message.channel.send(':white_check_mark: Disconnected from channel ``' + message.channel.name + '``')
 }
 
-client.getVideoInfo = async (url) => {
+client.getVideoInfo = async(url) => {
     await ytinfo(url.split('?v=')[1].split('&')[0]).then(data => {
         console.log(data)
         return data
@@ -97,10 +97,89 @@ client.playNext = (message) => {
     message.channel.send('Play next')
 
     const voiceConnection = client.voice.connections.get(message.channel.guild.id)
+    const trepeat = client.repeat[message.channel.guild.id]
+    const tqueue = client.queue[message.channel.guild.id]
     if (!voiceConnection) return
-    if (!client.queue[message.channel.guild.id]) return voiceConnection.channel.leave()
-    if (client.queue[message.channel.guild.id].array.length <= 1) return voiceConnection.channel.leave()
+    if (!tqueue.array.lenght <= 0) return voiceConnection.channel.leave()
 
+    if (!trepeat) {
+
+        tqueue.array.splice(tqueue.index, 1)
+        if (tqueue.array.lenght <= 0) { message.channel.send(':white_check_mark: Disconnected due inactivity'); return voiceConnection.disconnect() }
+        const obj = tqueue.array[tqueue.index]
+
+        const dispatcher = voiceConnection.play(client.ytdl(obj.link, { filter: 'audioonly', format: 'mp3' }))
+        dispatcher.setVolume(client.volume[message.channel.guild.id] || client.config.defaultVolume)
+        dispatcher.on('finish', () => client.playNext(message))
+
+        client.ytinfo(obj.link.split('?v=')[1].split('&')[0]).then(info => {
+
+            const embed = new client.embed()
+            embed.setThumbnail(info.thumbnailUrl)
+            embed.setTitle('Now Playing')
+            embed.setDescription(`[${info.title}](${info.url})`)
+            message.channel.send(embed)
+
+            client.nowPlaying[message.channel.guild.id] = embed
+
+        })
+
+        client.queue[message.channel.guild.id] = tqueue
+
+    } else if (trepeat == 'all') {
+
+        if (tqueue.index + 2 <= tqueue.array.length) {
+            tqueue.index += 1
+        } else {
+            tqueue.index = 0
+        }
+
+        if (tqueue.array.lenght <= 0) { message.channel.send(':white_check_mark: Disconnected due inactivity'); return voiceConnection.disconnect() }
+        const obj = tqueue.array[tqueue.index]
+
+        const dispatcher = voiceConnection.play(client.ytdl(obj.link, { filter: 'audioonly', format: 'mp3' }))
+        dispatcher.setVolume(client.volume[message.channel.guild.id] || client.config.defaultVolume)
+        dispatcher.on('finish', () => client.playNext(message))
+
+        client.ytinfo(obj.link.split('?v=')[1].split('&')[0]).then(info => {
+
+            const embed = new client.embed()
+            embed.setThumbnail(info.thumbnailUrl)
+            embed.setTitle('Now Playing')
+            embed.setDescription(`[${info.title}](${info.url})`)
+            message.channel.send(embed)
+
+            client.nowPlaying[message.channel.guild.id] = embed
+
+        })
+
+        client.queue[message.channel.guild.id] = tqueue
+
+
+    } else if (trepeat == 'one') {
+
+        if (tqueue.array.lenght <= 0) { message.channel.send(':white_check_mark: Disconnected due inactivity'); return voiceConnection.disconnect() }
+        const obj = tqueue.array[tqueue.index]
+
+        const dispatcher = voiceConnection.play(client.ytdl(obj.link, { filter: 'audioonly', format: 'mp3' }))
+        dispatcher.setVolume(client.volume[message.channel.guild.id] || client.config.defaultVolume)
+        dispatcher.on('finish', () => client.playNext(message))
+
+        client.ytinfo(obj.link.split('?v=')[1].split('&')[0]).then(info => {
+
+            const embed = new client.embed()
+            embed.setThumbnail(info.thumbnailUrl)
+            embed.setTitle('Now Playing')
+            embed.setDescription(`[${info.title}](${info.url})`)
+            message.channel.send(embed)
+
+            client.nowPlaying[message.channel.guild.id] = embed
+
+        })
+
+    } else {
+        message.channel.send(':x: Unsuspected error')
+    }
 
     /*
         let loop = client.repeat[message.channel.guild.id]
