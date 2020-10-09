@@ -1,0 +1,227 @@
+{
+    "config": {
+        "url": "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCrfBPBakwiC-7Y6MSSl1cpPrGcuCjW0X8&part=snippet&q=Gaming%20Music",
+        "method": "GET",
+        "userAgentDirectives": [
+            {
+                "product": "google-api-nodejs-client",
+                "version": "4.4.1",
+                "comment": "gzip"
+            }
+        ],
+        "headers": {
+            "x-goog-api-client": "gdcl/4.4.1 gl-node/14.8.0 auth/6.1.1",
+            "Accept-Encoding": "gzip",
+            "User-Agent": "google-api-nodejs-client/4.4.1 (gzip)",
+            "Accept": "application/json"
+        },
+        "params": {
+            "key": "AIzaSyCrfBPBakwiC-7Y6MSSl1cpPrGcuCjW0X8",
+            "part": "snippet",
+            "q": "Gaming Music"
+        },
+        "retry": true,
+        "responseType": "json"
+    },
+    "data": {
+        "kind": "youtube#searchListResponse",
+        "etag": "OavCV1Vtzj1T2Z2N5U3UCVLGga8",
+        "nextPageToken": "CAUQAA",
+        "regionCode": "DE",
+        "pageInfo": {
+            "totalResults": 1000000,
+            "resultsPerPage": 5
+        },
+        "items": [
+            {
+                "kind": "youtube#searchResult",
+                "etag": "4jCgK_XLlJec5kyU0BOUo35eJwo",
+                "id": {
+                    "kind": "youtube#video",
+                    "videoId": "bvVkWc3AfHY"
+                },
+                "snippet": {
+                    "publishedAt": "2020-10-03T08:32:00Z",
+                    "channelId": "UCviuCQka5ondw2VNszPIzsA",
+                    "title": "Best Music 2020 Mix ♫ Best of EDM ♫ Gaming Music NCS, Trap, Dubstep, DnB, Electro House",
+                    "description": "Stream On Spotify: https://lnk.to/7evenID/spotify Submit DEMO to 7even Records: https://bit.ly/7rcsubmit ...",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/bvVkWc3AfHY/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/bvVkWc3AfHY/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/bvVkWc3AfHY/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "7even EDM",
+                    "liveBroadcastContent": "none",
+                    "publishTime": "2020-10-03T08:32:00Z"
+                }
+            },
+            {
+                "kind": "youtube#searchResult",
+                "etag": "29RgB1OFKlQoC9uJLu2jOCCS2Sc",
+                "id": {
+                    "kind": "youtube#video",
+                    "videoId": "LaQj636PJh0"
+                },
+                "snippet": {
+                    "publishedAt": "2019-07-18T14:58:13Z",
+                    "channelId": "UCp6_KuNhT0kcFk-jXw9Tivg",
+                    "title": "Best Music Mix ♫ No Copyright EDM ♫ Gaming Music Trap, House, Dubstep",
+                    "description": "Best Music Mix ♫ No Copyright EDM ♫ Gaming Music Trap, House, Dubstep ✔️ MP3 FREE DOWNLOAD: http://bit.ly/gamingmusic01 ♫ Listen on Spotify: ...",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/LaQj636PJh0/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/LaQj636PJh0/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/LaQj636PJh0/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "Magic Music",
+                    "liveBroadcastContent": "none",
+                    "publishTime": "2019-07-18T14:58:13Z"
+                }
+            },
+            {
+                "kind": "youtube#searchResult",
+                "etag": "QCeyESEbfR6kMMX7q6sE8TGUcZo",
+                "id": {
+                    "kind": "youtube#video",
+                    "videoId": "u1ZCsqXVMT8"
+                },
+                "snippet": {
+                    "publishedAt": "2020-09-29T09:45:34Z",
+                    "channelId": "UCviuCQka5ondw2VNszPIzsA",
+                    "title": "Best Gaming Music 2020 Mix ♫ Best of EDM Mix ♫ NCS, Trap, Dubstep, DnB, Electro House",
+                    "description": "Best Gaming Music 2020 Mix ♫ Best of EDM Mix ♫ NCS, Trap, Dubstep, DnB, Electro House ⚡Stream On Spotify: https://lnk.to/7evenID/spotify Submit DEMO ...",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/u1ZCsqXVMT8/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/u1ZCsqXVMT8/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/u1ZCsqXVMT8/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "7even EDM",
+                    "liveBroadcastContent": "none",
+                    "publishTime": "2020-09-29T09:45:34Z"
+                }
+            },
+            {
+                "kind": "youtube#searchResult",
+                "etag": "fiVdjCPxoFuywMA3YRfPErRcG8s",
+                "id": {
+                    "kind": "youtube#video",
+                    "videoId": "EgqGoI2idg8"
+                },
+                "snippet": {
+                    "publishedAt": "2020-10-08T15:36:40Z",
+                    "channelId": "UCPLNiCE34nI4SId1PoAq5Aw",
+                    "title": "Gaming Music 24/7 🎵 Best EDM Trap x Bass x Dubstep x House 🎵 Best Music 2020",
+                    "description": "Gaming Music 24/7 Best EDM Trap x Bass x Dubstep x House Best Music 2020. gaming music 2020,best music mix,best music mix 2020,best music mix ...",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/EgqGoI2idg8/default_live.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/EgqGoI2idg8/mqdefault_live.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/EgqGoI2idg8/hqdefault_live.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "Arcadia Boosted",
+                    "liveBroadcastContent": "live",
+                    "publishTime": "2020-10-08T15:36:40Z"
+                }
+            },
+            {
+                "kind": "youtube#searchResult",
+                "etag": "GNozu4tNagVxU-0PxAtoTb1WcsE",
+                "id": {
+                    "kind": "youtube#video",
+                    "videoId": "-wz2seHrA-w"
+                },
+                "snippet": {
+                    "publishedAt": "2020-10-06T08:00:01Z",
+                    "channelId": "UCviuCQka5ondw2VNszPIzsA",
+                    "title": "Gaming Music Mix 2020♫ Best of EDM ♫ NCS, Trap, Dubstep, DnB, Electro House",
+                    "description": "Gaming Music Mix 2020♫ Best of EDM ♫ NCS, Trap, Dubstep, DnB, Electro House ⚡Stream On Spotify: https://lnk.to/7evenID/spotify Submit DEMO to 7even ...",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/-wz2seHrA-w/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/-wz2seHrA-w/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/-wz2seHrA-w/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "7even EDM",
+                    "liveBroadcastContent": "none",
+                    "publishTime": "2020-10-06T08:00:01Z"
+                }
+            }
+        ]
+    },
+    "headers": {
+        "alt-svc": "h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+        "cache-control": "private",
+        "connection": "close",
+        "content-encoding": "gzip",
+        "content-type": "application/json; charset=UTF-8",
+        "date": "Thu, 08 Oct 2020 18:07:36 GMT",
+        "server": "scaffolding on HTTPServer2",
+        "transfer-encoding": "chunked",
+        "vary": "Origin, X-Origin, Referer",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "0"
+    },
+    "status": 200,
+    "statusText": "OK",
+    "request": {
+        "responseURL": "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCrfBPBakwiC-7Y6MSSl1cpPrGcuCjW0X8&part=snippet&q=Gaming%20Music"
+    }
+}

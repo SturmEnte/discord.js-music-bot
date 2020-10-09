@@ -1,3 +1,7 @@
+const { google } = require('googleapis')
+
+const youtube = google.youtube('v3')
+
 module.exports.run = async (client, message, args) => {
 
     if (!client.voice.connections.has(message.channel.guild.id))
@@ -5,8 +9,19 @@ module.exports.run = async (client, message, args) => {
     const voiceConnection = client.voice.connections.get(message.channel.guild.id)
 
     if (args.length <= 0) return message.channel.send(`:x: You didn't specify a Youtube URL`)
-    const link = args[0]
-    if (!link.startsWith('https://www.youtube.com/watch?' || 'http://www.youtube.com/watch?')) return message.channel.send(`:x: You didn't specify a Youtube URL`)
+    var link = args[0]
+    if (!link.startsWith('https://www.youtube.com/watch?') || !link.startsWith('http://www.youtube.com/watch?')) {
+        const search = args.join(' ')
+        await youtube.search.list({
+            key: client.config.api_key,
+            part: 'snippet',
+            q: search
+        }).then(async (res) => {
+            console.log(res)
+            if (res.data.items.length < 1) return message.channel.send(':x: I cant find a video')
+            link = `https://youtube.com/watch?v=${res.data.items[0].id.videoId}`
+        })
+    }
 
     if (!voiceConnection.dispatcher) {
         try {

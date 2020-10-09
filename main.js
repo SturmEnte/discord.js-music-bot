@@ -2,6 +2,7 @@ const { Client, Collection, MessageEmbed } = require('discord.js')
 const fs = require('fs')
 const ytdl = require('ytdl-core')
 const ytinfo = require('updated-youtube-info')
+const { google } = require('googleapis')
 
 const client = new Client()
 const config = require('./json/config.json')
@@ -16,6 +17,8 @@ client.prefix = '?'
 client.ytdl = ytdl
 client.ytinfo = ytinfo
 client.embed = MessageEmbed
+client.fs = fs
+client.google = google
 
 client.commands = new Collection()
 

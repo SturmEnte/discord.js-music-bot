@@ -11,8 +11,12 @@
   "dependencies": {
     "discord.js": "^12.3.1",
     "ffmpeg-static": "^4.2.7",
+    "googleapis": "^61.0.0",
     "opusscript": "0.0.7",
     "updated-youtube-info": "^1.4.7",
     "ytdl-core": "^3.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
